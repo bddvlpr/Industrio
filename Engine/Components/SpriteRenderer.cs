@@ -8,7 +8,7 @@ namespace Industrio.Engine
     {
         public SpriteMap SpriteMap { get; set; }
         public int Frame { get; set; }
-        public float FrameDuration { get; set; } = 100f;
+        public float FrameDuration { get; set; } = float.PositiveInfinity;
         public double LastFrameTime { get; set; }
 
         public SpriteRenderer(Entity entity) : base(entity)

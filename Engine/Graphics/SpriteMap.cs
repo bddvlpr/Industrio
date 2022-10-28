@@ -6,6 +6,7 @@ namespace Industrio.Engine;
 public class SpriteMap
 {
     public static float Scale { get; } = 2f;
+    public static float TileSize { get; } = 16f * Scale;
 
     public Texture2D Map { get; set; }
     public int Frames { get { return Map.Width / 16; } }
