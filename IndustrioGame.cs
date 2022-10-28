@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Industrio.Engine;
+using Industrio.Scenes;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -6,28 +8,29 @@ namespace Industrio;
 
 public class IndustrioGame : Game
 {
-    private GraphicsDeviceManager _graphics;
-    private SpriteBatch _spriteBatch;
+    public static IndustrioGame Instance { get; private set; }
+
+    public GraphicsDeviceManager GraphicsDeviceManager { get; set; }
+    public SpriteBatch SpriteBatch { get; set; }
+    public Scene Scene { get; set; }
 
     public IndustrioGame()
     {
-        _graphics = new GraphicsDeviceManager(this);
+        Instance = this;
+        GraphicsDeviceManager = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
-        IsMouseVisible = true;
     }
 
     protected override void Initialize()
     {
-        // TODO: Add your initialization logic here
-
         base.Initialize();
+        Scene = new DebugScene();
     }
 
     protected override void LoadContent()
     {
-        _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-        // TODO: use this.Content to load your game content here
+        SpriteBatch = new SpriteBatch(GraphicsDevice);
+        base.LoadContent();
     }
 
     protected override void Update(GameTime gameTime)
@@ -35,16 +38,22 @@ public class IndustrioGame : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-        // TODO: Add your update logic here
+        Scene.PollUpdate(gameTime);
 
         base.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.CornflowerBlue);
+        GraphicsDevice.Clear(Color.Purple);
 
-        // TODO: Add your drawing code here
+        SpriteBatch.Begin(SpriteSortMode.Deferred,
+            BlendState.AlphaBlend,
+            SamplerState.PointClamp,
+            DepthStencilState.None,
+            RasterizerState.CullNone);
+        Scene.PollDraw(gameTime, SpriteBatch);
+        SpriteBatch.End();
 
         base.Draw(gameTime);
     }
