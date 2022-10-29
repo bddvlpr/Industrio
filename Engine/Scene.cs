@@ -6,7 +6,7 @@ namespace Industrio.Engine;
 
 public class Scene
 {
-    public List<Entity> Entities { get; set; }
+    public List<Entity> Entities { get; init; }
 
     public Scene()
     {

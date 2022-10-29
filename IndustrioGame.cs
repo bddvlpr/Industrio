@@ -24,7 +24,7 @@ public class IndustrioGame : Game
     protected override void Initialize()
     {
         base.Initialize();
-        Scene = new DebugScene();
+        Scene = DebugSceneCreator.CreateTestArea();
     }
 
     protected override void LoadContent()
@@ -45,7 +45,7 @@ public class IndustrioGame : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.Purple);
+        GraphicsDevice.Clear(new Color(29, 33, 45));
 
         SpriteBatch.Begin(SpriteSortMode.Deferred,
             BlendState.AlphaBlend,

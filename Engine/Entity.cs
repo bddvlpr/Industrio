@@ -8,7 +8,7 @@ namespace Industrio.Engine;
 public class Entity
 {
     public string Name { get; set; }
-    public List<Component> Components { get; set; } = new List<Component>();
+    public List<Component> Components { get; init; }
 
     public Vector2 Position { get; set; }
     public Vector2 Rotation { get; set; }
@@ -20,6 +20,8 @@ public class Entity
     public Entity(string name)
     {
         Name = name;
+        Components = new List<Component>();
+
         Position = Vector2.Zero;
         Rotation = Vector2.Zero;
         Scale = Vector2.One;
