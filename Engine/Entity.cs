@@ -8,11 +8,11 @@ namespace Industrio.Engine;
 public class Entity
 {
     public string Name { get; set; }
-    public List<Component> Components { get; init; }
+    public List<Component> Components { get; init; } = new List<Component>();
 
-    public Vector2 Position { get; set; }
-    public Vector2 Rotation { get; set; }
-    public Vector2 Scale { get; set; }
+    public Vector2 Position { get; set; } = Vector2.Zero;
+    public Vector2 Rotation { get; set; } = Vector2.Zero;
+    public Vector2 Scale { get; set; } = Vector2.One;
 
     public event EventHandler<DrawEventArgs> OnDraw;
     public event EventHandler<UpdateEventArgs> OnUpdate;
@@ -20,11 +20,6 @@ public class Entity
     public Entity(string name)
     {
         Name = name;
-        Components = new List<Component>();
-
-        Position = Vector2.Zero;
-        Rotation = Vector2.Zero;
-        Scale = Vector2.One;
     }
 
     public Entity() : this("Untitled Entity") { }

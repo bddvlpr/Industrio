@@ -3,12 +3,12 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Industrio.Engine;
 
-public class Renderer : Component
+public class StaticRenderer : Component
 {
     public SpriteMap SpriteMap { get; set; }
-    public int Frame { get; set; }
+    public int Frame { get; set; } = 0;
 
-    public Renderer(Entity entity) : base(entity)
+    public StaticRenderer(Entity entity) : base(entity)
     {
         Entity.OnDraw += Draw;
     }

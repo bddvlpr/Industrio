@@ -6,12 +6,7 @@ namespace Industrio.Engine;
 
 public class Scene
 {
-    public List<Entity> Entities { get; init; }
-
-    public Scene()
-    {
-        Entities = new List<Entity>();
-    }
+    public List<Entity> Entities { get; init; } = new List<Entity>();
 
     public void PollUpdate(GameTime gameTime)
     {

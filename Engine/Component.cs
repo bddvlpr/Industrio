@@ -7,5 +7,6 @@ public abstract class Component
     public Component(Entity entity)
     {
         Entity = entity;
+        Entity.Components.Add(this);
     }
 }
