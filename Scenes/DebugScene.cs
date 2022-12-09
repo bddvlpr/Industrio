@@ -1,4 +1,5 @@
 using Industrio.Engine;
+using Industrio.Entities;
 using Microsoft.Xna.Framework;
 
 namespace Industrio.Scenes;
@@ -9,24 +10,13 @@ public static class DebugSceneCreator
     {
         var scene = new Scene();
 
-        var staticPlayer = new Entity("Static Player");
-        var staticRenderer = new StaticRenderer(staticPlayer)
-        {
-            SpriteMap = SpriteMap.Load("Textures/Character/Idle"),
-        };
+        var player = new PlayerEntity();
 
-        scene.Entities.Add(staticPlayer);
+        scene.Entities.Add(player);
 
-        var animatedPlayer = new Entity("Animated Player");
-        var animatedRenderer = new AnimatedRenderer(animatedPlayer)
-        {
-            SpriteMap = SpriteMap.Load("Textures/Character/Idle"),
-            Animation = new Animation(new int[] { 0, 1, 2 }, 250f),
-        };
+        var tile = new StructureEntity() { Position = new Vector2(100, 100) };
 
-        animatedPlayer.Position = new Vector2(100, 100);
-
-        scene.Entities.Add(animatedPlayer);
+        scene.Entities.Add(tile);
 
         return scene;
     }

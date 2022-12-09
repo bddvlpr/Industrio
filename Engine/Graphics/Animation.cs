@@ -4,6 +4,7 @@ namespace Industrio.Engine;
 
 public class Animation
 {
+    public string Name { get; set; }
     public SpriteMap SpriteMap { get; set; }
     public int Frame { get; set; } = 0;
     public int[] Frames { get; set; }
@@ -12,8 +13,10 @@ public class Animation
     public bool Loop { get; set; }
     public bool IsPlaying { get; set; } = true;
 
-    public Animation(int[] frames, double frameTime = 250, bool loop = true)
+    public Animation(string name, SpriteMap spriteMap, int[] frames, double frameTime = 250, bool loop = true)
     {
+        Name = name;
+        SpriteMap = spriteMap;
         Frames = frames;
         FrameTime = frameTime;
         Loop = loop;

@@ -11,8 +11,10 @@ public class Entity
     public List<Component> Components { get; init; } = new List<Component>();
 
     public Vector2 Position { get; set; } = Vector2.Zero;
-    public Vector2 Rotation { get; set; } = Vector2.Zero;
     public Vector2 Scale { get; set; } = Vector2.One;
+
+    public bool FlippedHorizontally { get; set; } = false;
+    public bool FlippedVertically { get; set; } = false;
 
     public event EventHandler<DrawEventArgs> OnDraw;
     public event EventHandler<UpdateEventArgs> OnUpdate;
@@ -32,5 +34,10 @@ public class Entity
     public void InvokeUpdate(GameTime gameTime)
     {
         OnUpdate?.Invoke(this, new UpdateEventArgs(gameTime));
+    }
+
+    public T GetComponent<T>() where T : Component
+    {
+        return (T)Components.Find(component => component is T);
     }
 }

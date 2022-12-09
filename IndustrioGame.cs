@@ -18,6 +18,9 @@ public class IndustrioGame : Game
     {
         Instance = this;
         GraphicsDeviceManager = new GraphicsDeviceManager(this);
+        //GraphicsDeviceManager.IsFullScreen = true;
+        GraphicsDeviceManager.PreferredBackBufferWidth = 1920;
+        GraphicsDeviceManager.PreferredBackBufferHeight = 1080;
         Content.RootDirectory = "Content";
     }
 

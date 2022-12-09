@@ -13,6 +13,11 @@ public class AnimatedRenderer : StaticRenderer
 
     private void Update(object sender, UpdateEventArgs e)
     {
+        if (Animation == null) return;
+        if (SpriteMap != Animation.SpriteMap)
+        {
+            SpriteMap = Animation.SpriteMap;
+        }
         var currentFrame = Animation.FrameStep(e.GameTime);
         if (currentFrame != Frame)
         {
