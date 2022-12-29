@@ -14,7 +14,7 @@ public static class DebugSceneCreator
 
         scene.Entities.Add(player);
 
-        var tile = new StructureEntity() { Position = new Vector2(100, 100) };
+        var tile = new StructureEntity() { Position = new Vector2(0, 100) };
 
         scene.Entities.Add(tile);
 

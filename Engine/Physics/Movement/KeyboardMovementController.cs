@@ -14,11 +14,16 @@ public class KeyboardMovementController : MovementController
         var state = Keyboard.GetState();
 
         var velocity = Vector2.Zero;
-        if (state.IsKeyDown(Keys.Left)) velocity.X -= 1;
-        if (state.IsKeyDown(Keys.Right)) velocity.X += 1;
-        if (state.IsKeyDown(Keys.Up)) velocity.Y -= 1;
-        if (state.IsKeyDown(Keys.Down)) velocity.Y += 1;
+        if (state.IsKeyDown(Keys.Left)) velocity.X -= 100;
+        if (state.IsKeyDown(Keys.Right)) velocity.X += 100;
+        //if (state.IsKeyDown(Keys.Up)) velocity.Y -= 100;
+        //if (state.IsKeyDown(Keys.Down)) velocity.Y += 100;
 
-        return velocity * RigidBody.MaxSpeed;
+        return velocity;
+    }
+
+    public bool IsJumping()
+    {
+        return Keyboard.GetState().IsKeyDown(Keys.Space);
     }
 }

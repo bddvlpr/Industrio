@@ -40,4 +40,9 @@ public class Entity
     {
         return (T)Components.Find(component => component is T);
     }
+
+    public bool HasComponent<T>() where T : Component
+    {
+        return Components.Exists(component => component is T);
+    }
 }

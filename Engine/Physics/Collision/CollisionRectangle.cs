@@ -11,7 +11,7 @@ public class CollisionRectangle
 
     public CollisionRectangle(Vector2 size)
     {
-        Size = size;
+        Size = size * SpriteMap.Scale;
     }
 
     public bool Intersects(CollisionRectangle other)

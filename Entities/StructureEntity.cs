@@ -21,7 +21,7 @@ public class StructureEntity : Entity
 
         Collider = new DynamicCollider(this)
         {
-            Shape = new CollisionRectangle(new Vector2(32, 32)),
+            Shape = new CollisionRectangle(new Vector2(16, 16)),
         };
     }
 }
