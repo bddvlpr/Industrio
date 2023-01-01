@@ -1,6 +1,8 @@
+using System;
 using Industrio.Engine;
 using Industrio.Entities;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Industrio.Scenes;
 
@@ -14,9 +16,16 @@ public static class DebugSceneCreator
 
         scene.Entities.Add(player);
 
-        var tile = new StructureEntity() { Position = new Vector2(0, 100) };
+        for (int i = 0; i < IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferWidth / 32; i++)
+        {
+            scene.Entities.Add(StructureEntity.CreatePlatform(new Vector2(i * 32, IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferHeight - 32)));
+        }
 
-        scene.Entities.Add(tile);
+        var crawler = new CrawlerEntity() { Position = new Vector2(200, IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferHeight - 64) };
+
+        scene.Entities.Add(crawler);
+        scene.Entities.Add(StructureEntity.CreatePlatform(new Vector2(0, IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferHeight - 64)));
+        scene.Entities.Add(StructureEntity.CreatePlatform(new Vector2(IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferWidth - 32, IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferHeight - 64)));
 
         return scene;
     }

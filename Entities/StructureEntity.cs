@@ -11,8 +11,6 @@ public class StructureEntity : Entity
 
     public StructureEntity()
     {
-        Name = "StructureTile";
-
         Renderer = new StaticRenderer(this)
         {
             SpriteMap = SpriteMap.Load("Textures/Tile/Structure"),
@@ -23,5 +21,21 @@ public class StructureEntity : Entity
         {
             Shape = new CollisionRectangle(new Vector2(16, 16)),
         };
+    }
+
+    public static StructureEntity CreatePlatform(Vector2 position, int frame = 1)
+    {
+        var entity = new StructureEntity()
+        {
+            Name = "Platform",
+        };
+        entity.Position = position;
+        entity.Renderer = new StaticRenderer(entity)
+        {
+            SpriteMap = SpriteMap.Load("Textures/Tile/Structure"),
+            Frame = frame,
+        };
+        entity.Collider.Shape = new CollisionRectangle(new Vector2(16, 16));
+        return entity;
     }
 }

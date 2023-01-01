@@ -24,11 +24,21 @@ public class RigidBody : Component
 
     public void ApplyGravity(float delta)
     {
-        // Increase velocity the longer the player is in the air
+        var colliderEntities = IndustrioGame.Instance.Scene.Entities.FindAll(e => e.HasComponent<DynamicCollider>());
+        IsGrounded = false;
+        foreach (var colliderEntity in colliderEntities)
+        {
+            if (colliderEntity == Entity)
+                continue;
+
+            if (GetNextRectangle(new Vector2(0, 1)).Intersects(colliderEntity.GetComponent<DynamicCollider>().GetRectangle()))
+                IsGrounded = true;
+        }
+
         if (!IsGrounded)
-            AirTime += delta;
+            AirTime += 1;
         else AirTime = 0;
-        Velocity += new Vector2(0, 981f * AirTime * delta);
+        Velocity += new Vector2(0, 13.1f * Math.Clamp(AirTime, -100, 100) * delta);
     }
 
     public void ApplyCollision(float delta)
@@ -53,7 +63,7 @@ public class RigidBody : Component
             var myColliderRect = myCollider.GetRectangle();
             var otherColliderRect = otherCollider.GetRectangle();
 
-            if (GetNextRectangle().Intersects(otherColliderRect))
+            if (GetNextRectangle(Velocity).Intersects(otherColliderRect))
             {
                 var myColliderCenter = new Vector2(myColliderRect.X + myColliderRect.Width / 2, myColliderRect.Y + myColliderRect.Height / 2);
                 var otherColliderCenter = new Vector2(otherColliderRect.X + otherColliderRect.Width / 2, otherColliderRect.Y + otherColliderRect.Height / 2);
@@ -67,10 +77,11 @@ public class RigidBody : Component
 
                 if (Math.Abs(overlap.X) > Math.Abs(overlap.Y))
                 {
-                    if (myColliderCenter.Y < otherColliderCenter.Y)
+                    /* if (myColliderCenter.Y < otherColliderCenter.Y)
                         Entity.Position += new Vector2(0, overlap.Y);
                     else
-                        Entity.Position -= new Vector2(0, overlap.Y);
+                        Entity.Position -= new Vector2(0, overlap.Y); */
+                    Entity.Position -= new Vector2(0, overlap.Y);
                     Velocity = new Vector2(Velocity.X, 0);
                 }
                 else
@@ -80,13 +91,6 @@ public class RigidBody : Component
                     else
                         Entity.Position -= new Vector2(overlap.X, 0);
                     Velocity = new Vector2(0, Velocity.Y);
-                }
-
-                // check if grounded
-                if (myColliderCenter.Y < otherColliderCenter.Y)
-                {
-                    IsGrounded = true;
-                    AirTime = 0;
                 }
             }
         }
@@ -100,8 +104,8 @@ public class RigidBody : Component
         Velocity = Vector2.Zero;
     }
 
-    public Rectangle GetNextRectangle()
+    public Rectangle GetNextRectangle(Vector2 velocity)
     {
-        return new Rectangle((int)(Entity.Position.X + Velocity.X), (int)(Entity.Position.Y + Velocity.Y), (int)Entity.GetComponent<DynamicCollider>().Shape.Size.X, (int)Entity.GetComponent<DynamicCollider>().Shape.Size.Y);
+        return new Rectangle((int)(Entity.Position.X + velocity.X), (int)(Entity.Position.Y + velocity.Y), (int)Entity.GetComponent<DynamicCollider>().Shape.Size.X, (int)Entity.GetComponent<DynamicCollider>().Shape.Size.Y);
     }
 }

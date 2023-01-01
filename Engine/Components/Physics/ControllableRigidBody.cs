@@ -7,7 +7,7 @@ namespace Industrio.Engine;
 public class ControllableRigidBody : RigidBody
 {
     public float MaxSpeed { get; set; } = 6000f;
-    public float Acceleration { get; set; } = 0.01f;
+    public float Acceleration { get; set; } = 0.02f;
     public MovementController MovementController { get; set; }
 
     public ControllableRigidBody(Entity entity) : base(entity)
@@ -24,6 +24,8 @@ public class ControllableRigidBody : RigidBody
         e.SpriteBatch.DrawString(spriteFont, $"Velocity: {Velocity}", startDrawPoint + new Vector2(0, 16), Color.White);
         e.SpriteBatch.DrawString(spriteFont, $"Position: {Entity.Position}", startDrawPoint + new Vector2(0, 32), Color.White);
         e.SpriteBatch.DrawString(spriteFont, $"MaxSpeed: {MaxSpeed}", startDrawPoint + new Vector2(0, 48), Color.White);
+        e.SpriteBatch.DrawString(spriteFont, $"Grounded: {IsGrounded}", startDrawPoint + new Vector2(0, 64), Color.White);
+        e.SpriteBatch.DrawString(spriteFont, $"AirTime: {AirTime}", startDrawPoint + new Vector2(0, 80), Color.White);
     }
 
     private void Update(object sender, UpdateEventArgs e)
@@ -35,7 +37,8 @@ public class ControllableRigidBody : RigidBody
             var keyboardMovementController = (KeyboardMovementController)MovementController;
             if (keyboardMovementController.IsJumping() && IsGrounded)
             {
-                Velocity = new Vector2(Velocity.X, -100) + Velocity;
+                Velocity = new Vector2(Velocity.X, -10) + Velocity;
+                AirTime = -25;
                 IsGrounded = false;
             }
         }
