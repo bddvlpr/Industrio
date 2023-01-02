@@ -13,7 +13,7 @@ public class ControllableRigidBody : RigidBody
     public ControllableRigidBody(Entity entity) : base(entity)
     {
         Entity.OnUpdate += Update;
-        Entity.OnDraw += Draw;
+        //Entity.OnDraw += Draw;
     }
 
     private void Draw(object sender, DrawEventArgs e)

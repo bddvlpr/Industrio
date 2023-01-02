@@ -6,6 +6,7 @@ namespace Industrio.Engine;
 public class RigidBody : Component
 {
     public Vector2 Velocity { get; set; } = Vector2.Zero;
+    public bool HasGravity { get; set; } = true;
     public float AirTime { get; set; } = 0;
     public bool IsGrounded { get; set; } = false;
 
@@ -38,7 +39,7 @@ public class RigidBody : Component
         if (!IsGrounded)
             AirTime += 1;
         else AirTime = 0;
-        Velocity += new Vector2(0, 13.1f * Math.Clamp(AirTime, -100, 100) * delta);
+        if (HasGravity) Velocity += new Vector2(0, 13.1f * Math.Clamp(AirTime, -100, 100) * delta);
     }
 
     public void ApplyCollision(float delta)

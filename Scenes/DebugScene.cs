@@ -21,11 +21,15 @@ public static class DebugSceneCreator
             scene.Entities.Add(StructureEntity.CreatePlatform(new Vector2(i * 32, IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferHeight - 32)));
         }
 
-        var crawler = new CrawlerEntity() { Position = new Vector2(200, IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferHeight - 64) };
+        //var crawler = new CrawlerEntity() { Position = new Vector2(200, IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferHeight - 64) };
+        //scene.Entities.Add(crawler);
 
-        scene.Entities.Add(crawler);
+        var floater = new FloaterEntity() { Position = new Vector2(200, IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferHeight - 64) };
+        scene.Entities.Add(floater);
+
         scene.Entities.Add(StructureEntity.CreatePlatform(new Vector2(0, IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferHeight - 64)));
         scene.Entities.Add(StructureEntity.CreatePlatform(new Vector2(IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferWidth - 32, IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferHeight - 64)));
+
 
         return scene;
     }
