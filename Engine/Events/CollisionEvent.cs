@@ -1,17 +1,18 @@
 using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace Industrio.Engine;
 
 public class CollisionEventArgs : EventArgs
 {
     public GameTime GameTime { get; set; }
-    public Entity Entity { get; set; }
+    public DynamicCollider MyCollider { get; set; }
+    public DynamicCollider TargetCollider { get; set; }
 
-    public CollisionEventArgs(GameTime gameTime, Entity entity)
+    public CollisionEventArgs(GameTime gameTime, DynamicCollider myCollider, DynamicCollider targetCollider)
     {
         GameTime = gameTime;
-        Entity = entity;
+        MyCollider = myCollider;
+        TargetCollider = targetCollider;
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -7,6 +8,7 @@ public class StaticRenderer : Component
 {
     public SpriteMap SpriteMap { get; set; }
     public int Frame { get; set; } = 0;
+    public float Depth { get; set; } = 0.9f;
 
     public StaticRenderer(Entity entity) : base(entity)
     {
@@ -22,6 +24,6 @@ public class StaticRenderer : Component
         if (Entity.FlippedHorizontally) effects |= SpriteEffects.FlipHorizontally;
         if (Entity.FlippedVertically) effects |= SpriteEffects.FlipVertically;
 
-        drawEvent.SpriteBatch.Draw(SpriteMap.Map, Entity.Position, SpriteMap.GetFrame(Frame), Color.White, 0f, Vector2.Zero, scale, effects, 0f);
+        drawEvent.SpriteBatch.Draw(SpriteMap.Map, Entity.Position, SpriteMap.GetFrame(Frame), Color.White, 0f, Vector2.Zero, scale, effects, Depth);
     }
 }

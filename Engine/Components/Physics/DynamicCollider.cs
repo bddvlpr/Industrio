@@ -7,11 +7,14 @@ namespace Industrio.Engine;
 public class DynamicCollider : Component
 {
     public CollisionRectangle Shape { get; set; }
+    public bool IsTrigger { get; set; } = false;
 
     public float Left => Entity.Position.X;
     public float Right => Entity.Position.X + Shape.Size.X;
     public float Top => Entity.Position.Y;
     public float Bottom => Entity.Position.Y + Shape.Size.Y;
+
+    public event EventHandler<CollisionEventArgs> OnCollide;
 
     public DynamicCollider(Entity entity) : base(entity)
     {

@@ -50,11 +50,9 @@ public class IndustrioGame : Game
     {
         GraphicsDevice.Clear(new Color(29, 33, 45));
 
-        SpriteBatch.Begin(SpriteSortMode.Deferred,
+        SpriteBatch.Begin(SpriteSortMode.FrontToBack,
             BlendState.AlphaBlend,
-            SamplerState.PointClamp,
-            DepthStencilState.None,
-            RasterizerState.CullNone);
+            SamplerState.PointClamp);
         Scene.PollDraw(gameTime, SpriteBatch);
         SpriteBatch.End();
 

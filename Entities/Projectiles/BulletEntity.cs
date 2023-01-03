@@ -43,8 +43,8 @@ public class BulletEntity : Entity
                 continue;
 
             // TODO: kill
-            //if (RigidBody.GetNextRectangle(RigidBody.Velocity).Intersects(colliderEntity.GetComponent<DynamicCollider>().GetRectangle()))
-            //    IndustrioGame.Instance.Scene.DeletionQueue.Add(this);
+            if (RigidBody.GetNextRectangle(RigidBody.Velocity).Intersects(colliderEntity.GetComponent<DynamicCollider>().GetRectangle()))
+                IndustrioGame.Instance.Scene.DeletionQueue.Add(this);
         }
     }
 
