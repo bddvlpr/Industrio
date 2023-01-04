@@ -14,6 +14,11 @@ public class StructureEntity : Entity
     {
     }
 
+    public static StructureEntity CreatePlatform(Vector2 position, int amount, int min, int max)
+    {
+        return CreatePlatform(position, GetFrame(amount, min, max));
+    }
+
     public static StructureEntity CreatePlatform(Vector2 position, int frame = 1)
     {
         var entity = new StructureEntity()
@@ -90,5 +95,12 @@ public class StructureEntity : Entity
             newEntities.Add(entity);
         }
         return newEntities;
+    }
+
+    public static int GetFrame(int amount, int min, int max)
+    {
+        if (amount == min) return 0;
+        else if (amount == max) return 3;
+        else return amount % 2 == 0 ? 1 : 2;
     }
 }

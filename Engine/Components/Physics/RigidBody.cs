@@ -12,6 +12,7 @@ public class RigidBody : Component
 
     public RigidBody(Entity entity) : base(entity)
     {
+        Entity.OnUpdate += CheckDeath;
         Entity.OnUpdate += Update;
     }
 
@@ -103,6 +104,24 @@ public class RigidBody : Component
             Entity.FlippedHorizontally = Velocity.X < 0;
         Entity.Position += Velocity;
         Velocity = Vector2.Zero;
+    }
+
+    public void CheckDeath(object sender, UpdateEventArgs e)
+    {
+
+        var colliderEntities = IndustrioGame.Instance.Scene.Entities.FindAll(e => e.HasComponent<DynamicCollider>());
+
+        foreach (var colliderEntity in colliderEntities)
+        {
+            if (colliderEntity == Entity) continue;
+
+            var collider = colliderEntity.GetComponent<DynamicCollider>();
+
+            if (colliderEntity.Name.Equals("Bullet") && GetNextRectangle(Velocity).Intersects(collider.GetRectangle()))
+            {
+                IndustrioGame.Instance.Scene.DeletionQueue.Add(Entity);
+            }
+        }
     }
 
     public Rectangle GetNextRectangle(Vector2 velocity)

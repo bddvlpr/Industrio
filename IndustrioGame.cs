@@ -13,6 +13,7 @@ public class IndustrioGame : Game
     public GraphicsDeviceManager GraphicsDeviceManager { get; set; }
     public SpriteBatch SpriteBatch { get; set; }
     public Scene Scene { get; set; }
+    public SpriteFont Font { get; private set; }
 
     public IndustrioGame()
     {
@@ -22,12 +23,14 @@ public class IndustrioGame : Game
         GraphicsDeviceManager.PreferredBackBufferWidth = 720;
         GraphicsDeviceManager.PreferredBackBufferHeight = 480;
         Content.RootDirectory = "Content";
+        IsMouseVisible = true;
     }
 
     protected override void Initialize()
     {
         base.Initialize();
-        Scene = DebugSceneCreator.CreateTestArea();
+        Font = Content.Load<SpriteFont>("Fonts/04b03");
+        Scene = new MainMenuScene();
     }
 
     protected override void LoadContent()

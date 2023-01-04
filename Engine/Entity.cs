@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Industrio.Engine;
 
-public class Entity
+public class Entity : ICloneable
 {
     public string Name { get; set; }
     public List<Component> Components { get; init; } = new List<Component>();
@@ -44,5 +44,21 @@ public class Entity
     public bool HasComponent<T>() where T : Component
     {
         return Components.Exists(component => component is T);
+    }
+
+    public object Clone()
+    {
+        var clone = new Entity(Name);
+        clone.Position = Position;
+        clone.Scale = Scale;
+        clone.FlippedHorizontally = FlippedHorizontally;
+        clone.FlippedVertically = FlippedVertically;
+
+        foreach (var component in Components)
+        {
+            clone.Components.Add((Component)component.Clone());
+        }
+
+        return clone;
     }
 }

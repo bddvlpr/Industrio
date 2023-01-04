@@ -18,7 +18,25 @@ public class DynamicCollider : Component
 
     public DynamicCollider(Entity entity) : base(entity)
     {
+        Entity.OnUpdate += Update;
         //Entity.OnDraw += Draw;
+    }
+
+    private void Update(object sender, UpdateEventArgs e)
+    {
+        var colliderEntities = IndustrioGame.Instance.Scene.Entities.FindAll(e => e.HasComponent<DynamicCollider>());
+
+        foreach (var colliderEntity in colliderEntities)
+        {
+            if (colliderEntity == Entity) continue;
+
+            var collider = colliderEntity.GetComponent<DynamicCollider>();
+
+            if (Intersects(collider))
+            {
+                OnCollide?.Invoke(this, new CollisionEventArgs(e.GameTime, this, colliderEntity.GetComponent<DynamicCollider>()));
+            }
+        }
     }
 
     private void Draw(object sender, DrawEventArgs e)

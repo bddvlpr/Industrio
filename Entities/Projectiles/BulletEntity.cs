@@ -35,17 +35,7 @@ public class BulletEntity : Entity
 
     private void Update(object sender, UpdateEventArgs e)
     {
-        var colliderEntities = IndustrioGame.Instance.Scene.Entities.FindAll(e => e.HasComponent<DynamicCollider>());
 
-        foreach (var colliderEntity in colliderEntities)
-        {
-            if (colliderEntity == this)
-                continue;
-
-            // TODO: kill
-            if (RigidBody.GetNextRectangle(RigidBody.Velocity).Intersects(colliderEntity.GetComponent<DynamicCollider>().GetRectangle()))
-                IndustrioGame.Instance.Scene.DeletionQueue.Add(this);
-        }
     }
 
     public static Animation GetIdleAnimation()
