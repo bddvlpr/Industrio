@@ -9,6 +9,7 @@ public class CrawlerEntity : Entity
     public AnimatedRenderer Renderer { get; set; }
     public ControllableRigidBody RigidBody { get; set; }
     public DynamicCollider Collider { get; set; }
+    public DynamicCollider BiteCollider { get; set; }
 
     public CrawlerEntity()
     {
@@ -27,6 +28,27 @@ public class CrawlerEntity : Entity
         {
             Shape = new CollisionRectangle(new Vector2(16, 16)),
         };
+
+        BiteCollider = new DynamicCollider(this)
+        {
+            Shape = new CollisionRectangle(new Vector2(16, 16)),
+            Offset = new Vector2(8, 0),
+            IsTrigger = true,
+        };
+
+        OnUpdate += Update;
+    }
+
+    private void Update(object sender, UpdateEventArgs e)
+    {
+        if (FlippedHorizontally)
+        {
+            BiteCollider.Offset = new Vector2(-8, 0);
+        }
+        else
+        {
+            BiteCollider.Offset = new Vector2(8, 0);
+        }
     }
 
     public static Animation GetIdleAnimation()

@@ -7,19 +7,21 @@ namespace Industrio.Engine;
 public class DynamicCollider : Component
 {
     public CollisionRectangle Shape { get; set; }
+
+    public Vector2 Offset { get; set; } = Vector2.Zero;
     public bool IsTrigger { get; set; } = false;
 
-    public float Left => Entity.Position.X;
-    public float Right => Entity.Position.X + Shape.Size.X;
-    public float Top => Entity.Position.Y;
-    public float Bottom => Entity.Position.Y + Shape.Size.Y;
+    public float Left => Offset.X + Entity.Position.X;
+    public float Right => Offset.X + Entity.Position.X + Shape.Size.X;
+    public float Top => Offset.Y + Entity.Position.Y;
+    public float Bottom => Offset.Y + Entity.Position.Y + Shape.Size.Y;
 
     public event EventHandler<CollisionEventArgs> OnCollide;
 
     public DynamicCollider(Entity entity) : base(entity)
     {
         Entity.OnUpdate += Update;
-        //Entity.OnDraw += Draw;
+        Entity.OnDraw += Draw;
     }
 
     private void Update(object sender, UpdateEventArgs e)
@@ -30,11 +32,14 @@ public class DynamicCollider : Component
         {
             if (colliderEntity == Entity) continue;
 
-            var collider = colliderEntity.GetComponent<DynamicCollider>();
+            var colliders = colliderEntity.GetComponents<DynamicCollider>();
 
-            if (Intersects(collider))
+            foreach (var collider in colliders)
             {
-                OnCollide?.Invoke(this, new CollisionEventArgs(e.GameTime, this, colliderEntity.GetComponent<DynamicCollider>()));
+                if (Intersects(collider))
+                {
+                    OnCollide?.Invoke(this, new CollisionEventArgs(e.GameTime, this, colliderEntity.GetComponent<DynamicCollider>()));
+                }
             }
         }
     }
@@ -43,7 +48,7 @@ public class DynamicCollider : Component
     {
         var texture = new Texture2D(IndustrioGame.Instance.GraphicsDevice, 1, 1);
         texture.SetData(new[] { Color.Red });
-        e.SpriteBatch.Draw(texture, new Rectangle((int)Left, (int)Top, (int)Shape.Size.X, (int)Shape.Size.Y), Color.White);
+        e.SpriteBatch.Draw(texture, GetRectangle(), Color.White);
     }
 
     public Rectangle GetRectangle()

@@ -19,23 +19,19 @@ public class BulletEntity : Entity
             Animation = GetIdleAnimation(),
         };
 
-        RigidBody = new ControllableRigidBody(this);
-
+        RigidBody = new ControllableRigidBody(this)
+        {
+            HasGravity = false,
+            HasPhysics = false,
+        };
         RigidBody.MovementController = new BulletMovementController(RigidBody) { Direction = direction };
-        RigidBody.HasGravity = false;
-
 
         Collider = new DynamicCollider(this)
         {
-            Shape = new CollisionRectangle(new Vector2(16, 16)),
+            Shape = new CollisionRectangle(new Vector2(8, 8)),
+            Offset = new Vector2(8, 8),
+            IsTrigger = true,
         };
-
-        OnUpdate += Update;
-    }
-
-    private void Update(object sender, UpdateEventArgs e)
-    {
-
     }
 
     public static Animation GetIdleAnimation()

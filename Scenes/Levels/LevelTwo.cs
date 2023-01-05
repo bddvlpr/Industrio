@@ -5,9 +5,9 @@ using Microsoft.Xna.Framework;
 
 namespace Industrio.Engine;
 
-public class LevelOne : Scene
+public class LevelTwo : Scene
 {
-    public LevelOne()
+    public LevelTwo()
     {
         var width = IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferWidth;
         var height = IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferHeight;
@@ -41,6 +41,6 @@ public class LevelOne : Scene
 
         Entities.Add(new CrawlerSpawnerEntity() { Position = new Vector2(width / 2 + 240, height - 288), Delay = 2000f });
 
-        Entities.Add(new PortalEntity(() => IndustrioGame.Instance.Scene = new LevelTwo()) { Position = new Vector2(width / 2 + 288, height - 288) });
+        Entities.Add(new PortalEntity(() => IndustrioGame.Instance.Scene = DebugSceneCreator.CreateTestArea()) { Position = new Vector2(width / 2 + 288, height - 288) });
     }
 }

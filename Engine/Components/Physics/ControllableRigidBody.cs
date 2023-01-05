@@ -26,6 +26,7 @@ public class ControllableRigidBody : RigidBody
         e.SpriteBatch.DrawString(spriteFont, $"MaxSpeed: {MaxSpeed}", startDrawPoint + new Vector2(0, 48), Color.White);
         e.SpriteBatch.DrawString(spriteFont, $"Grounded: {IsGrounded}", startDrawPoint + new Vector2(0, 64), Color.White);
         e.SpriteBatch.DrawString(spriteFont, $"AirTime: {AirTime}", startDrawPoint + new Vector2(0, 80), Color.White);
+        e.SpriteBatch.DrawString(spriteFont, $"HasPhysics: {HasPhysics}", startDrawPoint + new Vector2(0, 96), Color.White);
     }
 
     private void Update(object sender, UpdateEventArgs e)

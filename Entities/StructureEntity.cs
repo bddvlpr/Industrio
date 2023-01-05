@@ -50,13 +50,13 @@ public class StructureEntity : Entity
                 random.Next(0, IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferWidth),
                 random.Next(0, IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferHeight)
             );
-            var predictionRectangle = new Rectangle((int)position.X, (int)position.Y, 32, 32);
+            var predictionRectangle = new Rectangle((int)position.X, (int)position.Y, 64, 64);
 
             if (newEntities.Count > 0)
             {
                 foreach (var entity in newEntities)
                 {
-                    var entityRectangle = new Rectangle((int)entity.Position.X, (int)entity.Position.Y, 32, 32);
+                    var entityRectangle = new Rectangle((int)entity.Position.X, (int)entity.Position.Y, 64, 64);
                     if (predictionRectangle.Intersects(entityRectangle))
                     {
                         i--;

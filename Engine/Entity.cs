@@ -41,6 +41,11 @@ public class Entity : ICloneable
         return (T)Components.Find(component => component is T);
     }
 
+    public List<T> GetComponents<T>() where T : Component
+    {
+        return Components.FindAll(component => component is T).ConvertAll(component => (T)component);
+    }
+
     public bool HasComponent<T>() where T : Component
     {
         return Components.Exists(component => component is T);

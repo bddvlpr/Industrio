@@ -1,6 +1,8 @@
 using System;
 using Industrio.Engine;
+using Industrio.Scenes;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Industrio.Entities;
 
@@ -9,6 +11,10 @@ public class PlayerEntity : Entity
     public AnimatedRenderer Renderer { get; set; }
     public ControllableRigidBody RigidBody { get; set; }
     public DynamicCollider Collider { get; set; }
+
+    public int Health { get; set; } = 3;
+
+    private float _invulnerabilityTimer = 0;
 
     public PlayerEntity()
     {
@@ -28,10 +34,12 @@ public class PlayerEntity : Entity
             Shape = new CollisionRectangle(new Vector2(16, 16)),
         };
 
-        OnUpdate += UpdateAnimationVisual;
+        OnUpdate += Update;
+        OnDraw += Draw;
+        Collider.OnCollide += OnCollide;
     }
 
-    private void UpdateAnimationVisual(object sender, UpdateEventArgs e)
+    private void Update(object sender, UpdateEventArgs e)
     {
         if (RigidBody.Velocity != Vector2.Zero && !Renderer.Animation.Name.Equals("Walking"))
         {
@@ -40,6 +48,40 @@ public class PlayerEntity : Entity
         if (RigidBody.Velocity == Vector2.Zero && !Renderer.Animation.Name.Equals("Idle"))
         {
             Renderer.Animation = GetIdleAnimation();
+        }
+
+        _invulnerabilityTimer = Math.Clamp(_invulnerabilityTimer - e.GameTime.ElapsedGameTime.Milliseconds, 0, 5000);
+        if (_invulnerabilityTimer > 0)
+        {
+            Renderer.Color = new Color(1f, 0.5f, 0.5f, MathF.Abs(MathF.Sin(_invulnerabilityTimer / 100)));
+        }
+        else Renderer.Color = Color.White;
+    }
+
+    private void Draw(object sender, DrawEventArgs e)
+    {
+        var spriteMap = SpriteMap.Load("Textures/UI/Health");
+        for (int i = 0; i < 3; i++)
+        {
+            e.SpriteBatch.Draw(spriteMap.Map, new Vector2(10 + (i * 16), 10), spriteMap.GetFrame(i < Health ? 0 : 1), Color.White, 0, Vector2.Zero, 2, SpriteEffects.None, 1);
+        }
+    }
+
+    private void OnCollide(object sender, CollisionEventArgs e)
+    {
+        if (e.TargetCollider.Entity.Name.Equals("Bullet") || e.TargetCollider.Entity.Name.Equals("Crawler"))
+        {
+            if (_invulnerabilityTimer > 0) return;
+
+            if (Health > 1)
+            {
+                Health--;
+                _invulnerabilityTimer = 5000;
+            }
+            else
+            {
+                IndustrioGame.Instance.Scene = new GameOverScene();
+            }
         }
     }
 

@@ -7,12 +7,12 @@ public class RigidBody : Component
 {
     public Vector2 Velocity { get; set; } = Vector2.Zero;
     public bool HasGravity { get; set; } = true;
+    public bool HasPhysics { get; set; } = true;
     public float AirTime { get; set; } = 0;
     public bool IsGrounded { get; set; } = false;
 
     public RigidBody(Entity entity) : base(entity)
     {
-        Entity.OnUpdate += CheckDeath;
         Entity.OnUpdate += Update;
     }
 
@@ -26,11 +26,16 @@ public class RigidBody : Component
 
     public void ApplyGravity(float delta)
     {
+        if (!HasGravity) return;
+
         var colliderEntities = IndustrioGame.Instance.Scene.Entities.FindAll(e => e.HasComponent<DynamicCollider>());
         IsGrounded = false;
         foreach (var colliderEntity in colliderEntities)
         {
             if (colliderEntity == Entity)
+                continue;
+
+            if (colliderEntity.GetComponent<DynamicCollider>().IsTrigger)
                 continue;
 
             if (GetNextRectangle(new Vector2(0, 1)).Intersects(colliderEntity.GetComponent<DynamicCollider>().GetRectangle()))
@@ -40,11 +45,13 @@ public class RigidBody : Component
         if (!IsGrounded)
             AirTime += 1;
         else AirTime = 0;
-        if (HasGravity) Velocity += new Vector2(0, 13.1f * Math.Clamp(AirTime, -100, 100) * delta);
+        Velocity += new Vector2(0, 13.1f * Math.Clamp(AirTime, -100, 100) * delta);
     }
 
     public void ApplyCollision(float delta)
     {
+        if (!HasPhysics) return;
+
         var myCollider = Entity.GetComponent<DynamicCollider>();
 
         if (myCollider == null)
@@ -58,8 +65,12 @@ public class RigidBody : Component
         foreach (var colliderEntity in colliderEntities)
         {
             var otherCollider = colliderEntity.GetComponent<DynamicCollider>();
+            var otherRigidBody = colliderEntity.GetComponent<RigidBody>();
 
             if (otherCollider == Entity.GetComponent<DynamicCollider>())
+                continue;
+
+            if (otherCollider.IsTrigger || (otherRigidBody != null && !otherRigidBody.HasPhysics))
                 continue;
 
             var myColliderRect = myCollider.GetRectangle();
@@ -104,24 +115,6 @@ public class RigidBody : Component
             Entity.FlippedHorizontally = Velocity.X < 0;
         Entity.Position += Velocity;
         Velocity = Vector2.Zero;
-    }
-
-    public void CheckDeath(object sender, UpdateEventArgs e)
-    {
-
-        var colliderEntities = IndustrioGame.Instance.Scene.Entities.FindAll(e => e.HasComponent<DynamicCollider>());
-
-        foreach (var colliderEntity in colliderEntities)
-        {
-            if (colliderEntity == Entity) continue;
-
-            var collider = colliderEntity.GetComponent<DynamicCollider>();
-
-            if (colliderEntity.Name.Equals("Bullet") && GetNextRectangle(Velocity).Intersects(collider.GetRectangle()))
-            {
-                IndustrioGame.Instance.Scene.DeletionQueue.Add(Entity);
-            }
-        }
     }
 
     public Rectangle GetNextRectangle(Vector2 velocity)
