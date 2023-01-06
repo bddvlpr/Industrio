@@ -26,6 +26,18 @@
 /processorParam:Quality=Best
 /build:Sounds/GameOver.wav
 
+#begin Sounds/Hit.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Hit.wav
+
+#begin Sounds/Jump.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Jump.wav
+
 #begin Sounds/RobotDeath.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

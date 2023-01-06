@@ -17,10 +17,7 @@ public class AirMovementController : MovementController
 
         if (playerEntity == null) return Vector2.Zero;
 
-        // create a vector from the floater to the player
         var floaterToPlayer = playerEntity.Position - RigidBody.Entity.Position;
-
-        // clamp it to move at a maximum speed of 100
         floaterToPlayer = Vector2.Clamp(floaterToPlayer, new Vector2(-100, -100), new Vector2(100, 100));
 
         return floaterToPlayer;

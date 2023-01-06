@@ -13,8 +13,8 @@ public abstract class DestroyableEnemyEntity : Entity
     {
         DeathCollider = new DynamicCollider(this)
         {
-            Offset = new Vector2(0, -1),
-            Shape = new CollisionRectangle(new Vector2(16, 16)),
+            Offset = new Vector2(4, -2),
+            Shape = new CollisionRectangle(new Vector2(12, 12)),
             IsTrigger = true
         };
 
@@ -27,6 +27,7 @@ public abstract class DestroyableEnemyEntity : Entity
         {
             var player = e.TargetCollider.Entity as PlayerEntity;
             IndustrioGame.Instance.RobotDeathSound.Play();
+            IndustrioGame.Instance.JumpSound.Play();
             IndustrioGame.Instance.Scene.DeletionQueue.Add(this);
             player.RigidBody.AirTime = -8;
             player.RigidBody.IsGrounded = false;

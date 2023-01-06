@@ -28,11 +28,26 @@ public static class DebugSceneCreator
         scene.Entities.Add(StructureEntity.CreatePlatform(new Vector2(0, height - 64)));
         scene.Entities.Add(StructureEntity.CreatePlatform(new Vector2(width - 32, height - 64)));
 
-        scene.Entities.Add(new FloaterEntity() { Position = new Vector2(100, 100) });
+        var floater = new FloaterEntity() { Position = new Vector2(width / 4 * 2, height - 64) };
+        //floater.RigidBody.MovementController = null;
+        //scene.Entities.Add(floater);
+
+        var crawler = new CrawlerEntity() { Position = new Vector2(width / 4, height - 128) };
+        //crawler.RigidBody.MovementController = null;
+        //crawler.RigidBody.HasGravity = false;
+
+        //scene.Entities.Add(crawler);
+
+        var turret = new TurretEntity() { Position = new Vector2(128, height - 64) };
+
+        scene.Entities.Add(turret);
 
         scene.Entities.AddRange(StructureEntity.CreateRandomBackground(8));
 
         scene.Entities.Add(new ScreenBoundaryEntity());
+
+        scene.Entities.Add(new JumpPadEntity() { Position = new Vector2(64, height - 64) });
+        //scene.Entities.Add(new JumpPadEntity() { Position = new Vector2(width - 64, height - 80) });
 
         return scene;
     }

@@ -32,7 +32,7 @@ public class CrawlerEntity : Entity
         BiteCollider = new DynamicCollider(this)
         {
             Shape = new CollisionRectangle(new Vector2(16, 16)),
-            Offset = new Vector2(8, 0),
+            Offset = new Vector2(8, 8),
             IsTrigger = true,
         };
 
@@ -43,11 +43,11 @@ public class CrawlerEntity : Entity
     {
         if (FlippedHorizontally)
         {
-            BiteCollider.Offset = new Vector2(-8, 0);
+            BiteCollider.Offset = new Vector2(-8, 8);
         }
         else
         {
-            BiteCollider.Offset = new Vector2(8, 0);
+            BiteCollider.Offset = new Vector2(8, 8);
         }
     }
 

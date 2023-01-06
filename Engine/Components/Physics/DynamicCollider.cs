@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace Industrio.Engine;
 
@@ -21,7 +22,7 @@ public class DynamicCollider : Component
     public DynamicCollider(Entity entity) : base(entity)
     {
         Entity.OnUpdate += Update;
-        //Entity.OnDraw += Draw;
+        Entity.OnDraw += Draw;
     }
 
     private void Update(object sender, UpdateEventArgs e)
@@ -46,6 +47,9 @@ public class DynamicCollider : Component
 
     private void Draw(object sender, DrawEventArgs e)
     {
+        var keyboardState = Keyboard.GetState();
+
+        if (!keyboardState.IsKeyDown(Keys.F1)) return;
         var texture = new Texture2D(IndustrioGame.Instance.GraphicsDevice, 1, 1);
         texture.SetData(new[] { Color.Red });
         e.SpriteBatch.Draw(texture, GetRectangle(), Color.White);

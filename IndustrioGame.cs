@@ -17,6 +17,8 @@ public class IndustrioGame : Game
     public SpriteFont Font { get; private set; }
     public SoundEffect RobotDeathSound { get; private set; }
     public SoundEffect GameOverSound { get; private set; }
+    public SoundEffect JumpSound { get; private set; }
+    public SoundEffect HitSound { get; private set; }
 
     public IndustrioGame()
     {
@@ -35,6 +37,8 @@ public class IndustrioGame : Game
         Font = Content.Load<SpriteFont>("Fonts/04b03");
         RobotDeathSound = Content.Load<SoundEffect>("Sounds/RobotDeath");
         GameOverSound = Content.Load<SoundEffect>("Sounds/GameOver");
+        JumpSound = Content.Load<SoundEffect>("Sounds/Jump");
+        HitSound = Content.Load<SoundEffect>("Sounds/Hit");
         Scene = new MainMenuScene();
     }
 

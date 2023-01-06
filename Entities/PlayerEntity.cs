@@ -77,6 +77,7 @@ public class PlayerEntity : Entity
             {
                 Health--;
                 _invulnerabilityTimer = 2500;
+                IndustrioGame.Instance.HitSound.Play();
             }
             else
             {

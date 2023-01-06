@@ -12,6 +12,8 @@ public class LevelTwo : Scene
         var width = IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferWidth;
         var height = IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferHeight;
 
+        Entities.AddRange(StructureEntity.CreateRandomBackground());
+
         Entities.Add(new PlayerEntity() { Position = new Vector2(100, height - 64) });
 
         for (int i = 0; i < (width / 32) + 2; i++)

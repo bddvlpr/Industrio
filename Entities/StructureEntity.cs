@@ -39,7 +39,7 @@ public class StructureEntity : Entity
         return entity;
     }
 
-    public static List<StructureEntity> CreateRandomBackground(int amount = 3)
+    public static List<StructureEntity> CreateRandomBackground(int amount = 10)
     {
         var width = IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferWidth;
         var height = IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferHeight;

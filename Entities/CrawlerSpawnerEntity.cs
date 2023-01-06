@@ -5,7 +5,7 @@ namespace Industrio.Entities;
 
 public class CrawlerSpawnerEntity : Entity
 {
-    public float Delay { get; set; } = 5000f;
+    public float Delay { get; set; } = 3000;
 
     private float _spawnTimer = 0;
 
