@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace Industrio.Entities;
 
-public class FloaterEntity : DestroyableEnemyEntity
+public class TurretEntity : DestroyableEnemyEntity
 {
     public AnimatedRenderer Renderer { get; set; }
     public ControllableRigidBody RigidBody { get; set; }
@@ -12,9 +12,9 @@ public class FloaterEntity : DestroyableEnemyEntity
 
     private float _shotTimer = 0;
 
-    public FloaterEntity()
+    public TurretEntity()
     {
-        Name = "Floater";
+        Name = "Turret";
 
         Renderer = new AnimatedRenderer(this)
         {
@@ -22,8 +22,6 @@ public class FloaterEntity : DestroyableEnemyEntity
         };
 
         RigidBody = new ControllableRigidBody(this);
-
-        RigidBody.MovementController = new AirMovementController(RigidBody);
         RigidBody.HasGravity = false;
 
         Collider = new DynamicCollider(this)
@@ -48,10 +46,24 @@ public class FloaterEntity : DestroyableEnemyEntity
             };
             IndustrioGame.Instance.Scene.SpawnQueue.Add(bullet);
         }
+
+        if (_shotTimer > 0 && !Renderer.Animation.Name.Equals("Shooting"))
+        {
+            Renderer.Animation = GetShootingAnimation();
+        }
+        else if (_shotTimer == 0 && !Renderer.Animation.Name.Equals("Idle"))
+        {
+            Renderer.Animation = GetIdleAnimation();
+        }
     }
 
     public static Animation GetIdleAnimation()
     {
-        return new Animation("Idle", SpriteMap.Load("Textures/Floater/Idle"), new int[] { 0, 1, 2, 3 }, 150, true); ;
+        return new Animation("Idle", SpriteMap.Load("Textures/Turret/Idle"), new int[] { 0 }, 150, true); ;
+    }
+
+    public static Animation GetShootingAnimation()
+    {
+        return new Animation("Shooting", SpriteMap.Load("Textures/Turret/Idle"), new int[] { 0, 1, 2 }, 100, false);
     }
 }

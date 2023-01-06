@@ -12,7 +12,7 @@ public class PlayerEntity : Entity
     public ControllableRigidBody RigidBody { get; set; }
     public DynamicCollider Collider { get; set; }
 
-    public int Health { get; set; } = 3;
+    public static int Health { get; set; } = 3;
 
     private float _invulnerabilityTimer = 0;
 
@@ -76,7 +76,7 @@ public class PlayerEntity : Entity
             if (Health > 1)
             {
                 Health--;
-                _invulnerabilityTimer = 5000;
+                _invulnerabilityTimer = 2500;
             }
             else
             {

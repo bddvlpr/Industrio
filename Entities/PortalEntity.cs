@@ -38,6 +38,7 @@ public class PortalEntity : Entity
 
         if (e.TargetCollider.Entity is PlayerEntity)
         {
+            Console.WriteLine($"Portal {Name} was activated!");
             if (keyState.IsKeyDown(Keys.Down))
                 Action();
         }

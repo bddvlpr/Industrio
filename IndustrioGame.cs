@@ -1,6 +1,7 @@
 ﻿using Industrio.Engine;
 using Industrio.Scenes;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -14,14 +15,16 @@ public class IndustrioGame : Game
     public SpriteBatch SpriteBatch { get; set; }
     public Scene Scene { get; set; }
     public SpriteFont Font { get; private set; }
+    public SoundEffect RobotDeathSound { get; private set; }
+    public SoundEffect GameOverSound { get; private set; }
 
     public IndustrioGame()
     {
         Instance = this;
         GraphicsDeviceManager = new GraphicsDeviceManager(this);
         //GraphicsDeviceManager.IsFullScreen = true;
-        GraphicsDeviceManager.PreferredBackBufferWidth = 720;
-        GraphicsDeviceManager.PreferredBackBufferHeight = 480;
+        GraphicsDeviceManager.PreferredBackBufferWidth = 960;
+        GraphicsDeviceManager.PreferredBackBufferHeight = 540;
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
     }
@@ -30,6 +33,8 @@ public class IndustrioGame : Game
     {
         base.Initialize();
         Font = Content.Load<SpriteFont>("Fonts/04b03");
+        RobotDeathSound = Content.Load<SoundEffect>("Sounds/RobotDeath");
+        GameOverSound = Content.Load<SoundEffect>("Sounds/GameOver");
         Scene = new MainMenuScene();
     }
 

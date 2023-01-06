@@ -41,33 +41,33 @@ public class StructureEntity : Entity
 
     public static List<StructureEntity> CreateRandomBackground(int amount = 3)
     {
+        var width = IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferWidth;
+        var height = IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferHeight;
+
         var newEntities = new List<StructureEntity>();
         var random = new Random();
-
-        for (int i = 0; i < amount; i++)
+        do
         {
-            var position = new Vector2(
-                random.Next(0, IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferWidth),
-                random.Next(0, IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferHeight)
-            );
-            var predictionRectangle = new Rectangle((int)position.X, (int)position.Y, 64, 64);
+            var entity = CreateBackground(new Vector2(random.Next(0, width), random.Next(0, height)));
+            var isTooClose = false;
 
-            if (newEntities.Count > 0)
+            foreach (var newEntity in newEntities)
             {
-                foreach (var entity in newEntities)
+                foreach (var entityToCheck in entity)
                 {
-                    var entityRectangle = new Rectangle((int)entity.Position.X, (int)entity.Position.Y, 64, 64);
-                    if (predictionRectangle.Intersects(entityRectangle))
+                    if (Vector2.Distance(newEntity.Position, entityToCheck.Position) < 100)
                     {
-                        i--;
-                        continue;
+                        isTooClose = true;
+                        break;
                     }
                 }
             }
 
-            newEntities.AddRange(CreateBackground(position));
-        }
-
+            if (!isTooClose)
+            {
+                newEntities.AddRange(entity);
+            }
+        } while (newEntities.Count < amount);
         return newEntities;
     }
 

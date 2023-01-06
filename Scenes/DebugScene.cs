@@ -11,27 +11,28 @@ public static class DebugSceneCreator
 {
     public static Scene CreateTestArea()
     {
-        var scene = new Scene();
 
+        var width = IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferWidth;
+        var height = IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferHeight;
+
+        var scene = new Scene();
         var player = new PlayerEntity();
 
-        scene.Entities.Add(player);
+        scene.Entities.Add(new PlayerEntity());
 
-        for (int i = 0; i < IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferWidth / 32; i++)
+        for (int i = 0; i < width / 32; i++)
         {
-            scene.Entities.Add(StructureEntity.CreatePlatform(new Vector2(i * 32, IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferHeight - 32)));
+            scene.Entities.Add(StructureEntity.CreatePlatform(new Vector2(i * 32, height - 32)));
         }
 
-        var crawler = new CrawlerEntity() { Position = new Vector2(200, IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferHeight - 64) };
-        scene.Entities.Add(crawler);
+        scene.Entities.Add(StructureEntity.CreatePlatform(new Vector2(0, height - 64)));
+        scene.Entities.Add(StructureEntity.CreatePlatform(new Vector2(width - 32, height - 64)));
 
-        var floater = new FloaterEntity() { Position = new Vector2(200, IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferHeight - 64) };
-        //scene.Entities.Add(floater);
+        scene.Entities.Add(new FloaterEntity() { Position = new Vector2(100, 100) });
 
-        scene.Entities.Add(StructureEntity.CreatePlatform(new Vector2(0, IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferHeight - 64)));
-        scene.Entities.Add(StructureEntity.CreatePlatform(new Vector2(IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferWidth - 32, IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferHeight - 64)));
+        scene.Entities.AddRange(StructureEntity.CreateRandomBackground(8));
 
-        scene.Entities.AddRange(StructureEntity.CreateRandomBackground());
+        scene.Entities.Add(new ScreenBoundaryEntity());
 
         return scene;
     }

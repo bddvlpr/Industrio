@@ -33,7 +33,7 @@ public class ControllableRigidBody : RigidBody
     {
         var velocity = MovementController?.Update(e.GameTime);
 
-        if (MovementController.GetType().Equals(typeof(KeyboardMovementController)))
+        if (MovementController != null && MovementController.GetType().Equals(typeof(KeyboardMovementController)))
         {
             var keyboardMovementController = (KeyboardMovementController)MovementController;
             if (keyboardMovementController.IsJumping() && IsGrounded)

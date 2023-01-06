@@ -5,7 +5,7 @@ namespace Industrio.Engine;
 
 public class LinearMovementController : MovementController
 {
-    public bool DirectionSwitched { get; set; } = false;
+    public bool DirectionSwitched { get; set; } = true;
 
     public LinearMovementController(ControllableRigidBody rigidBody) : base(rigidBody)
     {

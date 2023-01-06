@@ -19,28 +19,19 @@ public class LevelTwo : Scene
             Entities.Add(StructureEntity.CreatePlatform(new Vector2(i * 32, height - 32)));
         }
 
-        for (int i = 0; i < 10; i++)
+        Entities.Add(new TurretEntity() { Position = new Vector2(width - 128, height - 64), FlippedHorizontally = true });
+
+        Entities.Add(new JumpPadEntity() { Position = new Vector2(width - 64, height - 64) });
+
+        for (int i = 0; i < (width / 32) - 4; i++)
         {
-            Entities.Add(StructureEntity.CreatePlatform(new Vector2(width / 2 + i * 32, height - 112), i, 0, 9));
+            Entities.Add(StructureEntity.CreatePlatform(new Vector2(i * 32, height - 192), i, 0, (width / 32) - 3));
         }
 
-        for (int i = 0; i < 5; i++)
-        {
-            Entities.Add(StructureEntity.CreatePlatform(new Vector2(width / 4 + i * 32, height - 192), i, 0, 4));
-        }
+        Entities.Add(new FloaterEntity() { Position = new Vector2(128, 192) });
 
-        for (int i = 0; i < 10; i++)
-        {
-            Entities.Add(StructureEntity.CreatePlatform(new Vector2(width / 2 + i * 32, height - 256), i, 0, 9));
-        }
+        Entities.Add(new PortalEntity(() => IndustrioGame.Instance.Scene = new GameWonScene()) { Position = new Vector2(64, height - (192 + 32)) });
 
-        for (int i = 0; i < 4; i++)
-        {
-            Entities.Add(StructureEntity.CreatePlatform(new Vector2(width / 5 + i * 32, height - 340), i, 0, 3));
-        }
-
-        Entities.Add(new CrawlerSpawnerEntity() { Position = new Vector2(width / 2 + 240, height - 288), Delay = 2000f });
-
-        Entities.Add(new PortalEntity(() => IndustrioGame.Instance.Scene = DebugSceneCreator.CreateTestArea()) { Position = new Vector2(width / 2 + 288, height - 288) });
+        Entities.Add(new ScreenBoundaryEntity());
     }
 }

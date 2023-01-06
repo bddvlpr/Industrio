@@ -26,7 +26,7 @@ public class CrawlerSpawnerEntity : Entity
 
             var crawler = new CrawlerEntity()
             {
-                Position = Position
+                Position = Position,
             };
 
             IndustrioGame.Instance.Scene.SpawnQueue.Add(crawler);

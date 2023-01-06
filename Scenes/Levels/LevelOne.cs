@@ -1,6 +1,5 @@
 using System;
 using Industrio.Entities;
-using Industrio.Scenes;
 using Microsoft.Xna.Framework;
 
 namespace Industrio.Engine;
@@ -9,6 +8,11 @@ public class LevelOne : Scene
 {
     public LevelOne()
     {
+        if (PlayerEntity.Health <= 0)
+        {
+            PlayerEntity.Health = 3;
+        }
+
         var width = IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferWidth;
         var height = IndustrioGame.Instance.GraphicsDeviceManager.PreferredBackBufferHeight;
 
@@ -21,26 +25,28 @@ public class LevelOne : Scene
 
         for (int i = 0; i < 10; i++)
         {
-            Entities.Add(StructureEntity.CreatePlatform(new Vector2(width / 2 + i * 32, height - 112), i, 0, 9));
+            Entities.Add(StructureEntity.CreatePlatform(new Vector2(width / 2 + i * 32, height - 100), i, 0, 9));
         }
 
         for (int i = 0; i < 5; i++)
         {
-            Entities.Add(StructureEntity.CreatePlatform(new Vector2(width / 4 + i * 32, height - 192), i, 0, 4));
+            Entities.Add(StructureEntity.CreatePlatform(new Vector2(width / 4 + i * 32, height - 150), i, 0, 4));
         }
 
         for (int i = 0; i < 10; i++)
         {
-            Entities.Add(StructureEntity.CreatePlatform(new Vector2(width / 2 + i * 32, height - 256), i, 0, 9));
+            Entities.Add(StructureEntity.CreatePlatform(new Vector2(width / 2 + i * 32, height - 220), i, 0, 9));
         }
 
         for (int i = 0; i < 4; i++)
         {
-            Entities.Add(StructureEntity.CreatePlatform(new Vector2(width / 5 + i * 32, height - 340), i, 0, 3));
+            Entities.Add(StructureEntity.CreatePlatform(new Vector2(width / 5 + i * 32, height - 280), i, 0, 3));
         }
 
-        Entities.Add(new CrawlerSpawnerEntity() { Position = new Vector2(width / 2 + 240, height - 288), Delay = 2000f });
+        Entities.Add(new CrawlerSpawnerEntity() { Position = new Vector2(width / 5 + 16, height - 300), Delay = 5000f });
 
-        Entities.Add(new PortalEntity(() => IndustrioGame.Instance.Scene = new LevelTwo()) { Position = new Vector2(width / 2 + 288, height - 288) });
+        Entities.Add(new PortalEntity(() => IndustrioGame.Instance.Scene = new LevelTwo()) { Position = new Vector2(width / 2 + 288, height - 254) });
+
+        Entities.Add(new ScreenBoundaryEntity());
     }
 }

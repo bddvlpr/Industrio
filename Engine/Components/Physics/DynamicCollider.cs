@@ -21,7 +21,7 @@ public class DynamicCollider : Component
     public DynamicCollider(Entity entity) : base(entity)
     {
         Entity.OnUpdate += Update;
-        Entity.OnDraw += Draw;
+        //Entity.OnDraw += Draw;
     }
 
     private void Update(object sender, UpdateEventArgs e)

@@ -21,12 +21,17 @@ public class MainMenuScene : Scene
         Entities.Add(new UIText("Start game")
         {
             Position = new Vector2(10, minY - 40),
-            OnClick = (state) => IndustrioGame.Instance.Scene = DebugSceneCreator.CreateTestArea()
+            OnClick = (state) => IndustrioGame.Instance.Scene = new LevelOne()
         });
         Entities.Add(new UIText("Quit")
         {
             Position = new Vector2(10, minY - 20),
             OnClick = (state) => IndustrioGame.Instance.Exit()
+        });
+        Entities.Add(new UIText("Debug")
+        {
+            Position = new Vector2(10, minY),
+            OnClick = (state) => IndustrioGame.Instance.Scene = DebugSceneCreator.CreateTestArea()
         });
     }
 }

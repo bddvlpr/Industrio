@@ -1,20 +1,18 @@
-using System;
 using Industrio.Engine;
 using Industrio.Engine.UI;
 using Industrio.Entities;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 
 namespace Industrio.Scenes;
 
-public class GameOverScene : Scene
+public class GameWonScene : Scene
 {
-    public GameOverScene()
+    public GameWonScene()
     {
         var minY = IndustrioGame.Instance.GraphicsDevice.Viewport.Height / 2;
 
         Entities.AddRange(StructureEntity.CreateRandomBackground());
-        Entities.Add(new UIText("GAME OVER")
+        Entities.Add(new UIText("You won!")
         {
             Position = new Vector2(10, minY - 160),
             Scale = new Vector2(4)
@@ -29,7 +27,5 @@ public class GameOverScene : Scene
             Position = new Vector2(10, minY - 20),
             OnClick = (state) => IndustrioGame.Instance.Exit()
         });
-
-        IndustrioGame.Instance.GameOverSound.Play();
     }
 }
